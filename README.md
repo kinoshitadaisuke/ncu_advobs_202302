@@ -13,3 +13,8 @@ https://github.com/kinoshitadaisuke/ncu_advobs_202302
 ## Binder web page ##
 
 https://mybinder.org/v2/gh/kinoshitadaisuke/ncu_advobs_202302/HEAD
+
+## Sessions ##
+
+- session 01: Basic Python programming
+- session 02: Using Numpy
