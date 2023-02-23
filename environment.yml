@@ -1,12 +1,3 @@
 dependencies:
-  - astroplan
-  - astropy
-  - astroquery
-  - ffmpeg
-  - matplotlib
   - numpy
-  - pint
   - python=3.9
-  - rebound
-  - scipy
-  - uncertainties
