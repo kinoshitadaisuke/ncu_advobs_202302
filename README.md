@@ -2,6 +2,11 @@
 
 This is a repository for the course "Advanced Astronomical Observations" at NCU from Feb/2023 to Jun/2023.
 
+- Course overview
+  - from 09:00 to 12:00 on Friday
+  - classroom: S4-914
+  - instructor: Kinoshita Daisuke
+
 ## Course web page ##
 
 https://s3b.astro.ncu.edu.tw/advobs_202302/
