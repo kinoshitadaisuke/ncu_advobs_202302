@@ -6,6 +6,7 @@ This is a repository for the course "Advanced Astronomical Observations" at NCU 
   - from 09:00 to 12:00 on Friday
   - classroom: S4-914
   - instructor: Kinoshita Daisuke
+  - programming language: Python 3
 
 ## Course web page ##
 
