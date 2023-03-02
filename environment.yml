@@ -2,6 +2,7 @@ dependencies:
   - astropy
   - astroquery
   - ffmpeg
+  - jplephem
   - matplotlib
   - numpy
   - python=3.9
