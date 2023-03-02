@@ -1,3 +1,6 @@
 dependencies:
+  - astropy
+  - astroquery
+  - matplotlib
   - numpy
   - python=3.9
