@@ -7,6 +7,12 @@ This is a repository for the course "Advanced Astronomical Observations" at NCU 
   - classroom: S4-914
   - instructor: Kinoshita Daisuke
   - programming language: Python 3
+  - required Python packages
+    - numpy
+    - matplotlib
+    - astropy
+    - astroquery
+    - jplephem
 
 ## Course web page ##
 
