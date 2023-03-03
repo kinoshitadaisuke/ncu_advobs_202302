@@ -30,3 +30,5 @@ https://mybinder.org/v2/gh/kinoshitadaisuke/ncu_advobs_202302/HEAD
 
 - session 01: Basic Python programming
 - session 02: Using Numpy
+- session 03: Using Matplotlib
+
