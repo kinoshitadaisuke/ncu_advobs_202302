@@ -13,6 +13,7 @@ This is a repository for the course "Advanced Astronomical Observations" at NCU 
     - astropy
     - astroquery
     - jplephem
+    - scipy
 
 ## Course web page ##
 
