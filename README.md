@@ -33,4 +33,5 @@ https://mybinder.org/v2/gh/kinoshitadaisuke/ncu_advobs_202302/HEAD
 - session 02: Using Numpy
 - session 03: Using Matplotlib
 - session 04: Using Scipy
+- session 05: Manipulating FITS files
 
