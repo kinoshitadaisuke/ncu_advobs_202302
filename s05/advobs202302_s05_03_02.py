@@ -1,7 +1,7 @@
 #!/usr/pkg/bin/python3.9
 
 #
-# Time-stamp: <2023/03/16 12:43:05 (CST) daisuke>
+# Time-stamp: <2023/03/17 09:39:40 (CST) daisuke>
 #
 
 # importing argparse module
@@ -34,7 +34,7 @@ if (func == 'sin'):
     y = math.sin (x_deg / 180.0 * pi)
 elif (func == 'cos'):
     y = math.cos (x_deg / 180.0 * pi)
-if (func == 'tan'):
+elif (func == 'tan'):
     y = math.tan (x_deg / 180.0 * pi)
 
 # printing result
