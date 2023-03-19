@@ -34,4 +34,5 @@ https://mybinder.org/v2/gh/kinoshitadaisuke/ncu_advobs_202302/HEAD
 - session 03: Using Matplotlib
 - session 04: Using Scipy
 - session 05: Reading and writing FITS files
+- session 06: Examining bias frames
 
