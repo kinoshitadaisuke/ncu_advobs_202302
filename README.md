@@ -19,6 +19,9 @@ This is a repository for the course "Advanced Astronomical Observations" at NCU 
 
 https://s3b.astro.ncu.edu.tw/advobs_202302/
 
+Connect to Wi-Fi of our institute to download course material.
+If you are at home, use VPN service of our university to download course material.
+
 ## GitHub repository ##
 
 https://github.com/kinoshitadaisuke/ncu_advobs_202302
