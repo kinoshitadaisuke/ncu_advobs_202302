@@ -1,7 +1,7 @@
 #!/usr/pkg/bin/python3.9
 
 #
-# Time-stamp: <2023/03/23 12:54:53 (CST) daisuke>
+# Time-stamp: <2023/03/23 20:48:04 (CST) daisuke>
 #
 
 # importing argparse module
@@ -26,7 +26,8 @@ parser = argparse.ArgumentParser (description=desc)
 
 # adding arguments
 parser.add_argument ('file', help='input FITS file')
-parser.add_argument ('-o', help='output image file (EPS, PDF, PNG, PS)')
+parser.add_argument ('-o', default='bias.png', \
+                     help='output image file (EPS, PDF, PNG, PS)')
 parser.add_argument ('-r', type=int, default=300, \
                      help='resolution of output image (default: 300 dpi)')
 
@@ -38,23 +39,28 @@ file_input  = args.file
 file_output = args.o
 resolution  = args.r
 
+# making pathlib objects
+path_file_input  = pathlib.Path (file_input)
+path_file_output = pathlib.Path (file_output)
+
 # if input file is not a FITS file, then skip
-if not (file_input[-5:] == '.fits'):
+if not (path_file_input.suffix == '.fits'):
     # printing a message
     print (f'ERROR: input file must be a FITS file!')
     # exit
     sys.exit (1)
 
 # if output file is not either PNG, PDF, or PS, then skip
-if not ( (file_output[-4:] == '.eps') or (file_output[-4:] == '.pdf') \
-         or (file_output[-4:] == '.png') or (file_output[-3:] == '.ps') ):
+if not ( (path_file_output.suffix == '.eps') \
+         or (path_file_output.suffix == '.pdf') \
+         or (path_file_output.suffix == '.png') \
+         or (path_file_output.suffix == '.ps') ):
     # printing a message
     print (f'ERROR: output file must be either EPS or PDF or PNG or PS!')
     # exit
     sys.exit (1)
 
 # file existence check using pathlib module
-path_file_input = pathlib.Path (file_input)
 if not (path_file_input.exists ()):
     # printing a message
     print (f'ERROR: input file "{file_input}" does not exist!')
@@ -62,7 +68,6 @@ if not (path_file_input.exists ()):
     sys.exit (1)
 
 # file existence check using pathlib module
-path_file_output = pathlib.Path (file_output)
 if (path_file_output.exists ()):
     # printing a message
     print (f'ERROR: output file "{file_output}" exists!')

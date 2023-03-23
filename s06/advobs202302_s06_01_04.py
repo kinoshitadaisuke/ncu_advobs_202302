@@ -1,7 +1,7 @@
 #!/usr/pkg/bin/python3.9
 
 #
-# Time-stamp: <2023/03/23 11:22:51 (CST) daisuke>
+# Time-stamp: <2023/03/23 20:38:35 (CST) daisuke>
 #
 
 # importing argparse module
@@ -9,6 +9,9 @@ import argparse
 
 # importing sys module
 import sys
+
+# importing pathlib module
+import pathlib
 
 # importing astropy module
 import astropy.io.fits
@@ -26,8 +29,11 @@ args = parser.parse_args ()
 # input FITS file
 file_fits = args.file
 
+# making pathlib object
+path_file_fits = pathlib.Path (file_fits)
+
 # if input file is not a FITS file, then skip
-if not (file_fits[-5:] == '.fits'):
+if not (path_file_fits.suffix == '.fits'):
     # printing a message
     print (f'The file "{file_fits}" is not a FITS file!')
     # stopping the script
