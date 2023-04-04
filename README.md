@@ -39,4 +39,4 @@ https://mybinder.org/v2/gh/kinoshitadaisuke/ncu_advobs_202302/HEAD
 - session 05: Reading and writing FITS files
 - session 06: Examining bias frames
 - session 07: Dark current
-- session 08: Flatfield
+- session 08: Making flatfield
