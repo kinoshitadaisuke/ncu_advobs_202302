@@ -1,7 +1,7 @@
 #!/usr/pkg/bin/python3.9
 
 #
-# Time-stamp: <2023/03/30 16:26:12 (CST) daisuke>
+# Time-stamp: <2023/04/05 15:19:18 (CST) daisuke>
 #
 
 # importing argparse module
@@ -20,7 +20,7 @@ parser = argparse.ArgumentParser (description=desc)
 # adding arguments
 default_keyword = 'TIME-OBS,IMAGETYP,EXPTIME,FILTER'
 parser.add_argument ('-k', '--keywords', default=default_keyword, \
-                     help='a list of keyword to check (e.g. TIME-OBS,EXPTIME)')
+                     help='a list of keywords to check (e.g. TIME-OBS,EXPTIME)')
 parser.add_argument ('files', nargs='+', help='FITS files')
 
 # command-line argument analysis
@@ -38,12 +38,12 @@ print (f'# FILENAME,{keywords}')
 
 # processing files
 for file_fits in list_files:
-    # if the extension of the file is not '.fits', then skip
-    if (file_fits[-5:] != '.fits'):
-        continue
-
     # making a pathlib object
     path_fits = pathlib.Path (file_fits)
+
+    # if the extension of the file is not '.fits', then skip
+    if (path_fits.suffix != '.fits'):
+        continue
 
     # if the file does not exist, then skip
     if not (path_fits.exists ()):
