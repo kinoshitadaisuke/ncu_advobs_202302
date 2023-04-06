@@ -1,7 +1,7 @@
 #!/usr/pkg/bin/python3.9
 
 #
-# Time-stamp: <2023/04/06 14:06:33 (CST) daisuke>
+# Time-stamp: <2023/04/06 13:57:21 (CST) daisuke>
 #
 
 # importing argparse module
@@ -33,10 +33,12 @@ choices_cenfunc   = ['mean', 'median']
 choices_datatype  = ['LIGHT', 'FLAT', 'DARK', 'BIAS']
 choices_filter    = ['gp_Astrodon_2019', 'rp_Astrodon_2019', \
                      'ip_Astrodon_2019', 'V_319142', 'R_10349', '__NONE__']
+parser.add_argument ('-d', '--date', default='2000-01-01', \
+                     help='accepted date in YYYY-MM-DD (default: 2000-01-01)')
 parser.add_argument ('-t', '--datatype', choices=choices_datatype, \
                      default='LIGHT', help='accepted data type')
 parser.add_argument ('-e', '--exptime', type=float, \
-                     default=5.0, help='accepted exposure time (default: 5)')
+                     default=-1.0, help='accepted exposure time (default: -1)')
 parser.add_argument ('-f', '--filtername', choices=choices_filter, \
                      default='__NONE__', help='accepted data type')
 parser.add_argument ('-r', '--rejection', choices=choices_rejection, \
@@ -61,6 +63,7 @@ rejection   = args.rejection
 threshold   = args.threshold
 cenfunc     = args.cenfunc
 maxiters    = args.maxiters
+date        = args.date
 datatype    = args.datatype
 exptime     = args.exptime
 filtername  = args.filtername
@@ -113,12 +116,41 @@ if (path_output.exists ()):
     # exit the script
     sys.exit ()
 
+#
+# function to open a FITS file and read both header and data
+#
+def read_fits (file_fits):
+    # opening a FITS file
+    with astropy.io.fits.open (file_fits) as hdu_list:
+        # primary HDU
+        hdu0 = hdu_list[0]
+        # header
+        header0 = hdu0.header
+        # data
+        data0 = hdu0.data
+    # returning header and data
+    return (header0, data0)
+
+#
+# function to open a FITS file and read the header
+#
+def read_fits_header_only (file_fits):
+    # opening a FITS file
+    with astropy.io.fits.open (file_fits) as hdu_list:
+        # primary HDU
+        hdu0 = hdu_list[0]
+        # header
+        header0 = hdu0.header
+    # returning header and data
+    return (header0)
+    
 # date/time
 now = datetime.datetime.now ().isoformat ()
     
 # printing information
 print (f'#')
 print (f'# Data criteria:')
+print (f'#  date          = {date}')
 print (f'#  data type     = {datatype}')
 print (f'#  exposure time = {exptime} sec')
 print (f'#  filter        = {filtername}')
@@ -136,55 +168,52 @@ file_selected = []
 
 # reading FITS files and constructing a data cube
 for file_fits in list_input:
-    # opening FITS file
-    with astropy.io.fits.open (file_fits) as hdu_list:
-        # primary HDU
-        hdu0 = hdu_list[0]
+    # opening FITS file and reading header
+    header0 = read_fits_header_only (file_fits)
 
-        # reading header
-        header0 = hdu0.header
+    # if the date of data acquisition is different from what we need, then skip
+    if not (header0['DATE-OBS'] == date):
+        continue
 
-        # if the FITS file is not what you want, then skip
-        if ('FILTER' in header0):
-            if not ( (header0['IMAGETYP'] == datatype) \
-                     and (header0['EXPTIME'] == exptime) \
-                     and (header0['FILTER'] == filter) ):
-                # closing FITS file
-                hdu_list.close ()
-                continue
-        else:
-            if not ( (header0['IMAGETYP'] == datatype) \
-                     and (header0['EXPTIME'] == exptime) ):
-                # closing FITS file
-                hdu_list.close ()
-                continue
+    # if the data type is not what we need, then skip
+    if (header0['IMAGETYP'] != datatype):
+        continue
 
-        # if all the criteria meet, appending file name to the list
-        file_selected.append (file_fits)
+    # if the exposure time is not what we need, then skip
+    if ( (exptime >= 0.0) and (header0['EXPTIME'] != exptime) ):
+        continue
+
+    # if the filter is not what we need, then skip
+    if ( ('FILTER' in header0) and (header0['FILTER'] != filtername) \
+         and (filtername != '__NONE__') ):
+        continue
+
+    # if all the criteria meet, appending file name to the list
+    file_selected.append (file_fits)
         
-        # copying header only for the first FITS file
-        if (i == 0):
-            header = header0
+    # copying header only for the first FITS file
+    if (i == 0):
+        header = header0
 
-        # reading data
-        data0 = hdu0.data
-
-        # constructing a data cube
-        if (i == 0):
-            # for the first file, copying "data0" to "tmp0"
-            tmp0 = data0
-        elif (i == 1):
-            # for the second file, concatenating "tmp0" and "data0"
-            cube = numpy.concatenate ( ([tmp0], [data0]), axis=0 )
-        else:
-            # for the rest, concatenating "cube" and "data0"
-            cube = numpy.concatenate ( (cube, [data0]), axis=0 )
+    # opening FITS file and reading header and data
+    (header0, data0) = read_fits (file_fits)
     
-        # incrementing the parameter "i"
-        i += 1
+    # constructing a data cube
+    if (i == 0):
+        # for the first file, copying "data0" to "tmp0"
+        tmp0 = data0
+    elif (i == 1):
+        # for the second file, concatenating "tmp0" and "data0"
+        cube = numpy.concatenate ( ([tmp0], [data0]), axis=0 )
+    else:
+        # for the rest, concatenating "cube" and "data0"
+        cube = numpy.concatenate ( (cube, [data0]), axis=0 )
+    
+    # incrementing the parameter "i"
+    i += 1
 
-        # printing file name of FITS file to be combined
-        print (f'#  {file_fits}')
+    # printing file name of FITS file to be combined
+    print (f'#  {file_fits}')
 
 # printing information
 print (f'#')
