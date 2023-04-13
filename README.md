@@ -40,4 +40,4 @@ https://mybinder.org/v2/gh/kinoshitadaisuke/ncu_advobs_202302/HEAD
 - session 06: Examining bias frames
 - session 07: Dark current
 - session 08: Making flatfield
-- session 09: Trying basic CCD data reduction
+- session 09: Basic CCD data reduction
