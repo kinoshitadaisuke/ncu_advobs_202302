@@ -8,6 +8,7 @@ This is a repository for the course "Advanced Astronomical Observations" at NCU 
   - instructor: Kinoshita Daisuke
   - programming language: Python 3
   - required Python packages
+    - ginga
     - numpy
     - matplotlib
     - astropy
