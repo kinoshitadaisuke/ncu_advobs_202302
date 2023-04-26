@@ -1,7 +1,7 @@
 #!/usr/pkg/bin/python3.9
 
 #
-# Time-stamp: <2023/04/12 13:34:28 (CST) daisuke>
+# Time-stamp: <2023/04/26 21:21:25 (CST) daisuke>
 #
 
 # importing argparse module
@@ -17,7 +17,7 @@ import pathlib
 import astropy.io.fits
 
 # construction of parser object
-desc   = 'Printing FITS header'
+desc   = 'Printing the header of a FITS file'
 parser = argparse.ArgumentParser (description=desc)
 
 # adding arguments
