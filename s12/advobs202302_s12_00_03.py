@@ -1,7 +1,7 @@
 #!/usr/pkg/bin/python3.9
 
 #
-# Time-stamp: <2023/04/27 17:54:14 (CST) daisuke>
+# Time-stamp: <2023/04/27 17:54:03 (CST) daisuke>
 #
 
 # importing argparse module
@@ -22,13 +22,18 @@ import numpy
 # importing astropy module
 import astropy.io.fits
 
+# importing photutils module
+import photutils.datasets
+
 # constructing parser object
-desc   = 'generating a synthetic FITS image of uniform background'
+desc   = 'generating a synthetic FITS image of sky background'
 parser = argparse.ArgumentParser (description=desc)
 
 # adding command-line arguments
 parser.add_argument ('-b', '--background', type=float, default=1000.0, \
                      help='background level (default: 1000)')
+parser.add_argument ('-s', '--sigma', type=float, default=10.0, \
+                     help='noise level (default: 10)')
 parser.add_argument ('-x', '--xsize', type=int, default=1024, \
                      help='image size in x-axis (default: 1024 pixel)')
 parser.add_argument ('-y', '--ysize', type=int, default=1024, \
@@ -41,6 +46,7 @@ args = parser.parse_args ()
 
 # input parameters
 sky_background_level = args.background
+noise_level          = args.sigma
 image_size_x         = args.xsize
 image_size_y         = args.ysize
 file_output          = args.output
@@ -83,14 +89,17 @@ print (f'# input parameters')
 print (f'#')
 print (f'#  image size                = {image_size_x} x {image_size_y}')
 print (f'#  mean sky background level = {sky_background_level} ADU')
+print (f'#  noise level (stddev)      = {noise_level} ADU')
 print (f'#')
 
 # printing status
 print (f'# now, generating image...')
 
 # generating sky background data
-data = numpy.full (shape=image_size, fill_value=sky_background_level, \
-                   dtype='float64')
+data = photutils.datasets.make_noise_image (image_size, \
+                                            distribution='gaussian', \
+                                            mean=sky_background_level, \
+                                            stddev=noise_level)
 
 # printing status
 print (f'# finished generating image!')
@@ -109,6 +118,7 @@ header['comment'] = f'synthetic astronomical image of uniform background'
 header['comment'] = f'Options given:'
 header['comment'] = f'  image size = {image_size_x} x {image_size_y}'
 header['comment'] = f'  mean sky background level = {sky_background_level} ADU'
+header['comment'] = f'  noise level  = {noise_level} ADU'
 
 # printing status
 print (f'# finished generating FITS header!')
