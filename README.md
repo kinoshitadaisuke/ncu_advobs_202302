@@ -45,3 +45,6 @@ https://mybinder.org/v2/gh/kinoshitadaisuke/ncu_advobs_202302/HEAD
 - session 10: Basic CCD data reduction 2
 - session 11: Using Ginga
 - session 12: Centroid measurements and PSF fitting
+- session 13: aperture photometry
+- session 14: aperture photometry of real stars
+- session 15: atmospheric extinction
